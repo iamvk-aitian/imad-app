@@ -14,11 +14,11 @@ app.get('/first_one', function (req, res){
 });
 
 app.get('/second_one', function (req, res){
-    res.send('first_one request is now gonna serevd');
+    res.send('second_one request is now gonna serevd');
 });
 
 app.get('/third_one', function (req, res){
-    res.send('first_one request is now gonna serevd');
+    res.send('third_one request is now gonna serevd');
 });
 
 app.get('/ui/style.css', function (req, res) {

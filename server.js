@@ -20,18 +20,19 @@ app.get('/counter', function (req, res) {
 });
 
 var pool = new Pool(config);
-app.get('/test-db', function (req, res) {
-    //make a request and respond with results
-    pool.query('select * from test', function(err, res) {
-       if(err)  {
-            res.status(500).send(err.toString());
-       } 
-       else {
-           res.send(JSON.stringify(result.rows));
-       }
-    });
-});
+app.get('/test-db',function(req,res){
+	//make a query
+		//return a response
+	pool.query('select * from test',function(err,res){
+		if(err){
+			res.status(500).send(err.toString());
+		}
+		else{
+			res.send(JSON.stringify(result.rows));
+		}
+	});
 
+});
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });

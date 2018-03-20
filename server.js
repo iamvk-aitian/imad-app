@@ -65,11 +65,13 @@ app.post('/create-user', function(req, res){
    pool.query('INSERT INTO "user" (username, password) VALUES($1, $2)', [username, dbString], function(err, result){
        if(err)
         {
+            res.setHeader('Content-Type', 'application/json');
 			res.status(500).send(err.toString());
 		}
 		else
         {
-			res.send('User Successfully created with username :' + username); 
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.parse('{"message":"User Successfully created with username :' + username + ' "}')); 
 		}
    });
 });
@@ -79,12 +81,14 @@ app.post('/login', function(req, res){
    pool.query('SELECT * From "user" WHERE username = $1', [username], function(err, result){
        if(err)
         {
+			res.setHeader('Content-Type', 'application/json');
 			res.status(500).send(err.toString());
 		}
 		else
         {
             if(result.rows.length === 0){
-                res.send(403).send('username/password is invalid');
+                res.setHeader('Content-Type', 'application/json');
+                res.send(403).send(JSON.parse('{"error":"username/password is invalid"}'));
             }
             else {
                 //match the password
@@ -97,11 +101,13 @@ app.post('/login', function(req, res){
                     //set cookie with a session id
                     //internally, on the server side, it maps the session id to an object
                     //{auth: {userId}}
-                    res.send('Credentials are Correct');
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(JSON.parse('{"message":"You have successfully logged in"}'));
                     
                 }
                 else{
-                    res.send(403).send('username/password is invalid');
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(403).send(JSON.parse('{"error":"username/password is invalid"}'));
                 }
             }
         }
